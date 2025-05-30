@@ -1,5 +1,5 @@
-# git_air
-TUI for git
+# *GIT_AIR*
+GIT_AIR is a TUI offering a simple UI to perform commands offered in git.
 
 
 ## features 🔑
