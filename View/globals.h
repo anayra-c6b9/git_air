@@ -3,6 +3,6 @@
 
 #include "components/app_window/app_window.h"
 
-extern AppComponent::AppWindow app_win
-
+// window size
+extern AppComponent::AppWindow app_win;
 #endif

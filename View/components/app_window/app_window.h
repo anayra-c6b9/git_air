@@ -5,24 +5,24 @@ using uint = unsigned int;
 
 namespace AppComponent{
     	class AppWindow{
-        	private:
-            		uint max_win_width;
-			uint max_win_height;
-            		uint menu_bar_height;
-		public:
-			AppWindow(){
-				menu_bar_height = 3;
-				max_win_width = 78;
-				max_win_height = 23;
-			}
-			// functions to change window dimensions
-			// when window is resized
-			void setAppWinWidth(int width);
-			void setAppWinHeight(int height);
-			uint getAppWinWidth();
-			uint getAppWinWidth();
-			uint getMenuBarHeight();
-			void setWindowSize();	
+				private:
+						uint max_win_width;
+						uint max_win_height;
+						uint menu_bar_height;
+				public:
+						AppWindow(){
+							menu_bar_height = 3;
+							max_win_width = 78;
+							max_win_height = 23;
+						}
+						// functions to change window dimensions
+						// when window is resized
+						void setAppWinWidth(int width);
+						void setAppWinHeight(int height);
+						uint getAppWinWidth();
+						uint getAppWinHeight();
+						uint getMenuBarHeight();
+						void setWindowSize();
     	};
 }
 
