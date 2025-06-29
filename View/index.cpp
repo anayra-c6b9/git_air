@@ -2,12 +2,11 @@
 #include <ncurses.h>
 #include <csignal>
 #include "globals.h"
-#include "auth/index.h"
-#include "components/app_window/app_window.h"
 #include "colors/color_pair.h"
 
 // application window global variable
 AppComponent::AppWindow app_win;
+AppComponent::MenuBar menu_bar;
 
 void handleSignals(int sig) {
 		switch(sig) {
@@ -17,6 +16,10 @@ void handleSignals(int sig) {
 				default:
 						break;
 		}
+
+}
+
+void loadWindow() {
 
 }
 
@@ -31,13 +34,19 @@ int main() {
 		timeout(50);
 		
 		// get window size
-		app_win.setWindowSize();		
+		app_win.setWindowSize();
+		
 		// set signal for window size change
 		std::signal(SIGWINCH, handleSignals);
 
+		void *loadedWindow = ;
+
 		while(1){
 				clear();
-				Auth::display_auth_page();
+				// main display section
+				auth_win.displayAuthPage();
+				// menu bar
+				menu_bar.displayMenuBar();
 				int ch = getch();
 				if(ch == KEY_UP) break;
 		}
