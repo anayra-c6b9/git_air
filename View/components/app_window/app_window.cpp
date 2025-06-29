@@ -30,6 +30,10 @@ uint AppComponent::AppWindow::getMenuBarHeight() {
 		return menu_bar_height;
 }
 
+uint AppComponent::AppWindow::getMainBodyHeight() {
+		return max_win_height - menu_bar_height > -1 ? max_win_height - menu_bar_height : 0;
+}
+
 void AppComponent::AppWindow::setWindowSize() {
 		winsize win;
 
@@ -39,6 +43,7 @@ void AppComponent::AppWindow::setWindowSize() {
 			if(ioctl(STDOUT_FILENO, TIOCGWINSZ, &win) == 0){
 					setAppWinWidth(win.ws_col);
 					setAppWinHeight(win.ws_row);
+					
 			} else {
 					int w, h;
 					getmaxyx(stdscr, h, w);
