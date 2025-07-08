@@ -7,6 +7,7 @@
 // application window global variable
 AppComponent::AppWindow app_win;
 AppComponent::MenuBar menu_bar;
+AppComponent::App app;
 
 void handleSignals(int sig) {
 		switch(sig) {
@@ -39,16 +40,10 @@ int main() {
 		// set signal for window size change
 		std::signal(SIGWINCH, handleSignals);
 
-		void *loadedWindow = ;
-
 		while(1){
 				clear();
 				// main display section
-				auth_win.displayAuthPage();
-				// menu bar
-				menu_bar.displayMenuBar();
-				int ch = getch();
-				if(ch == KEY_UP) break;
+				app.run();
 		}
 
 		endwin();

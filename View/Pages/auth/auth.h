@@ -2,29 +2,23 @@
 #define AUTH_H
 
 #include <string>
+#include "../../components/page/page.h"
+// #include "../../components/app/app.h"
 
 using uint = unsigned int;
 
-namespace AuthNS{
+namespace AppPages{
 
 
 	struct authData
 	{
 		uint id;
-		// uint label_y;
-		// uint label_;
 		std::string label;
-		// uint input_y;
-		// uint input_x;
-		// std::string input;
-		// uint input_length;
 	};
 	
 	
-	class AuthWindow{
+	class AuthPage: public AppComponent::Page{
 		private:
-			static uint window_number;
-			static uint window_created;
 			uint current_selection;
 			uint id;
 			bool is_active = false;
@@ -33,13 +27,17 @@ namespace AuthNS{
 			std::string passkey;
 			authData auth_data[3];
 			bool is_user_saved = false;
+			enum Field {
+				USERNAME = 0,
+				EMAIL = 1,
+				PASSKEY = 2,
+				TOTAL_FIELDS = 3
+			};
 		public:
-			AuthWindow() {
-				window_number++;
-				id = ++window_created;
+			AuthPage() {
 				is_active = true;
-				current_selection = -1;
-
+				current_selection = 0;
+				hasFooter = true;
 				// username
 				auth_data[0] = {1, "Username"};
 				auth_data[1] = {2, "Email"};
@@ -54,12 +52,12 @@ namespace AuthNS{
 			std::string getPasskey();
 			void toggleIsUserSaved();
 			bool getIsUserSaved();
-			void displayAuthPage();
+			void display() override;
+            void handleInput(int ch, AppComponent::App *app) override ;
 			bool login();
 
-			~AuthWindow(){
+			~AuthPage(){
 				is_active = false;
-				window_number--;
 			}
 	};
 
