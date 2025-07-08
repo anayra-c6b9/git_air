@@ -6,7 +6,7 @@
 using uint = unsigned int;
 
 namespace AppComponent{
-        void stringInputComponent(uint id, std::string label, uint line_height, uint margin);
+        void stringInputComponent(uint id, std::string label, std::string value, bool isSelected, uint line_height, uint margin);
 }
 
 #endif
