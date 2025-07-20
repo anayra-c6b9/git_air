@@ -1,6 +1,10 @@
 {
   "files.associations": {
     "*.ejs": "html",
-    "iosfwd": "cpp"
-  }
+    "iosfwd": "cpp",
+    "thread": "cpp",
+    "new": "cpp",
+    "string": "cpp"
+  },
+  "C_Cpp.errorSquiggles": "enabled"
 }

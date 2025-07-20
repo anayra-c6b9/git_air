@@ -3,6 +3,7 @@
 
 #include <string>
 #include "../../components/page/page.h"
+#include "../../../Model/user/muser.h"
 // #include "../../components/app/app.h"
 
 using uint = unsigned int;
@@ -31,7 +32,8 @@ namespace AppPages{
 				USERNAME = 0,
 				EMAIL = 1,
 				PASSKEY = 2,
-				TOTAL_FIELDS = 3
+				LOGIN = 3,
+				TOTAL_FIELDS = 4
 			};
 		public:
 			AuthPage() {

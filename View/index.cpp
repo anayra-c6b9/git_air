@@ -3,6 +3,7 @@
 #include <csignal>
 #include "globals.h"
 #include "colors/color_pair.h"
+#include "index.h"
 
 // application window global variable
 AppComponent::AppWindow app_win;
@@ -20,11 +21,8 @@ void handleSignals(int sig) {
 
 }
 
-void loadWindow() {
 
-}
-
-int main() {
+int AppView::runUI() {
 	
 		setlocale(LC_ALL, "");
 		initscr();

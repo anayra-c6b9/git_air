@@ -4,6 +4,10 @@
 #include "../../globals.h"
 #include "../../components/text_with_label/text_with_label.h"
 #include "../../components/app/app.h"
+#include "../../components/button_with_label/button_with_label.h"
+
+#include "../../../Model/user/muser.h"
+#include "../../../Controller/auth/cauth.h"
 
 using uint = unsigned int;
 
@@ -37,11 +41,6 @@ void AppPages::AuthPage::toggleIsUserSaved() {
 
 bool AppPages::AuthPage::getIsUserSaved() {
 	return is_user_saved;
-}
-
-bool AppPages::AuthPage::login() {
-	// login process
-	return true;
 }
 
 static int getExtraSpace(int winSize, int len) {
@@ -79,9 +78,17 @@ void AppPages::AuthPage::display(){
 
 		// UI
 
+		// creating a button object
+		std::string button_label_name = "LOG IN";
+		AppComponent::ButtonWithLabel button(3 /*height*/, button_label_name.length() + 2, button_label_name);
+
 		AppComponent::stringInputComponent(auth_data[0].id, auth_data[0].label, username, current_selection == USERNAME, iter_y + 0*3, iter_x);
 		AppComponent::stringInputComponent(auth_data[1].id, auth_data[1].label, email, current_selection == EMAIL, iter_y + 1*3, iter_x);
 		AppComponent::stringInputComponent(auth_data[2].id, auth_data[2].label, passkey, current_selection == PASSKEY, iter_y + 2*3, iter_x);
+		
+		extraSpace = getExtraSpace(app_win.getAppWinWidth(), button_label_name.length());
+		lower_limit = extraSpace/2;
+		button.display(iter_y + 3*3, lower_limit, current_selection == LOGIN);
 
 }
 
@@ -105,6 +112,13 @@ void AppPages::AuthPage::handleInput(int ch, AppComponent::App *app) {
             else if (current_selection == PASSKEY && !passkey.empty())
                 passkey.pop_back();
             break;
+		case KEY_ENTER: // from numpad
+        case '\n':
+        case '\r':
+            if (current_selection == LOGIN && login()){
+				app->switchPage("home");
+			}
+			break;
         default:
             if (ch >= 32 && ch <= 126) { // Printable ASCII
 				echo();
@@ -119,4 +133,17 @@ void AppPages::AuthPage::handleInput(int ch, AppComponent::App *app) {
             }
             break;
     }
+}
+
+bool AppPages::AuthPage::login() {
+	// login process
+	// AppModels::User user;
+    std::string token = getPasskey();
+
+
+    if ( AppControllers::Auth::login(token)) {
+		return true;
+    }
+	return false;
+
 }
