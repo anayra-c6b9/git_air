@@ -1,7 +1,7 @@
 #include "muser.h"
 #include <cpr/cpr.h>
 #include <nlohmann/json.hpp>
-
+#include <string>
 #include "../repo/mrepo.h"
 
 using json = nlohmann::json;
@@ -40,43 +40,57 @@ bool AppModels::User::login(AppModels::User & user, const std::string& token) {
 
 }
 
-bool AppModels::User::fetchUserRepos(AppModels::User & user, std::vector<AppModels::Repo> &repos){
+bool AppModels::User::fetchUserRepos(){
     try {
-        // API call to fetch repositories
-        cpr::Response res = cpr::Get(
-            cpr::Url{"https://api.github.com/user/repos"},
-            cpr::Header{
-                {"Authorization", "token " + user.getToken()},
-                {"User-Agent", "git_air"}
+        int page = 1;
+        repos.clear();
+        while (true) {
+            std::string url = "https://api.github.com/user/repos?sort=updated&page=" + std::to_string(page);
+
+            cpr::Response res = cpr::Get(
+                cpr::Url{url},
+                cpr::Header{
+                    {"Authorization", "token " + getToken()},
+                    {"User-Agent", "git_air"}
+                }
+            );
+
+            if (res.status_code != 200) {
+                // some error code
+                return false;
             }
-        );
 
-        // Check for HTTP error
-        if (res.status_code != 200) {
-            // error code
-            return false;
+            json json_res = json::parse(res.text);
+
+            if (json_res.empty()) {
+                break; // No more repos, exit loop
+            }
+
+            for (const auto &repo_json : json_res) {
+                AppModels::Repo repo;
+                repo.name        = repo_json["name"].get<std::string>();
+                repo.full_name   = repo_json["full_name"].get<std::string>();
+                if (repo_json["description"].is_null()) {
+                    repo.description = "(No description)";
+                } else {
+                    repo.description = repo_json["description"].get<std::string>();
+                }
+                
+                repo.privateRepo = repo_json["private"].get<bool>();
+                repo.html_url    = repo_json["html_url"].get<std::string>();
+
+                repos.push_back(repo);
+            }
+
+            page++; // Move to next page
         }
-
-        // Parse JSON array
-        json json_res = json::parse(res.text);
-
-        for (const auto &repo_json : json_res) {
-            AppModels::Repo repo;
-
-            repo.name        = repo_json["name"].get<std::string>();
-            repo.full_name   = repo_json["full_name"].get<std::string>();
-            repo.description = repo_json.value("description", "");
-            repo.privateRepo = repo_json["private"].get<bool>();
-            repo.html_url    = repo_json["html_url"].get<std::string>();
-
-            repos.push_back(repo);
-        }
-
         return true;
-    } catch (const std::exception &e) {
-        // some error code
+    } catch(const std::exception &e) {
+        // error page
+        return false;
     }
-
-    return false;
 }
 
+std::vector<AppModels::Repo> AppModels::User::loadRepos(){
+    return repos;
+}

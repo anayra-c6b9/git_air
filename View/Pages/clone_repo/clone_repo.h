@@ -35,6 +35,7 @@ namespace AppPages{
 			void display() override;
             void handleInput(int ch, AppComponent::App *app) override ;
             bool clone();
+			void clearValues() override;
 			~CloneRepoPage(){
 			}
 	};

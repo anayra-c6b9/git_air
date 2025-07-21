@@ -81,3 +81,5 @@ void AppPages::LoadingScreen::handleInput(int ch, AppComponent::App *app) {
     }
 }
 void AppPages::LoadingScreen::navigateToNext() {}
+
+void AppPages::LoadingScreen::clearValues(){}

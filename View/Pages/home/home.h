@@ -34,12 +34,13 @@ namespace AppPages{
 				hasFooter = true;
 				// username
 				page_element[0] = {1, "Select Local repository", "browse"};
-				page_element[1] = {2, "View all github repository", ""};
+				page_element[1] = {2, "View all github repository", "user_repos"};
 				page_element[2] = {3, "Clone remote repository", "clone_repo"};
 			}
 
 			void display() override;
             void handleInput(int ch, AppComponent::App *app) override ;
+			void clearValues() override;
 
 			~HomePage(){
 			}

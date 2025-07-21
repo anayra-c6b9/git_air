@@ -10,6 +10,11 @@ void AppComponent::App::run() {
         current_page->display();
         if(current_page->hasFooter)
             menu_bar.displayMenuBar();
+        if(isEscapeMode()){
+            attron(COLOR_RED);
+            mvaddstr(0,0, "ESC mode");
+            attroff(COLOR_RED);
+        }
         refresh();
         current_page->handleInput(ch, this);
     }
@@ -58,12 +63,13 @@ void AppComponent::App::handleModeKey(int ch){
             // code to clear the user data in model
             // navigate to auth page
             user.clearValues();
+            pages["auth"]->clearValues();
             switchPage("auth");
             break;
         case 81:
         case 113:
             // quit safely
-            AppComponent::App::quit();
+            quit();
             break;
         default:
             break;

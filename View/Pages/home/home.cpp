@@ -53,8 +53,14 @@ void AppPages::HomePage::display(){
 }
 
 void AppPages::HomePage::handleInput(int ch, AppComponent::App *app){
-	
+	if(app->isEscapeMode()){
+		app->handleModeKey(ch);
+		return;
+	}
 	switch (ch) {
+        case KEY_ESC:
+            app->toggleMode();
+            break;
         case KEY_UP:
             if (current_selection > 0)
                 current_selection--;
@@ -73,3 +79,5 @@ void AppPages::HomePage::handleInput(int ch, AppComponent::App *app){
             break;
     }
 }
+
+void AppPages::HomePage::clearValues(){}

@@ -41,6 +41,7 @@ namespace AppPages{
 			void display() override;
             void handleInput(int ch, AppComponent::App * app) override;
             void navigateToNext();
+			void clearValues() override;
 
 			~LoadingScreen(){
 				is_active = false;

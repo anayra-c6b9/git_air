@@ -8,6 +8,8 @@
 
 #include "../../../Model/user/muser.h"
 #include "../../../Controller/auth/cauth.h"
+#include "../../../all_globals.h"
+#include "../../../Controller/repo/crepo.h"
 
 using uint = unsigned int;
 
@@ -93,8 +95,14 @@ void AppPages::AuthPage::display(){
 }
 
 void AppPages::AuthPage::handleInput(int ch, AppComponent::App *app) {
-	
+	if(app->isEscapeMode()){
+		app->handleModeKey(ch);
+		return;
+	}
 	switch (ch) {
+		case KEY_ESC:
+			app->toggleMode();
+			break;
         case KEY_UP:
             if (current_selection > 0)
                 current_selection--;
@@ -142,8 +150,16 @@ bool AppPages::AuthPage::login() {
 
 
     if ( AppControllers::Auth::login(token)) {
+		user.repos = AppControllers::Repo::fetchUserRepos();
 		return true;
     }
 	return false;
 
+}
+
+void AppPages::AuthPage::clearValues(){
+	email = "";
+	username = "";
+	passkey = "";
+	current_selection = 0;
 }

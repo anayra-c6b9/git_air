@@ -28,6 +28,7 @@ namespace AppPages{
 			void display() override;
             void handleInput(int ch, AppComponent::App *app) override ;
             bool browse();
+			void clearValues() override;
 			~BrowsePage(){
 			}
 	};

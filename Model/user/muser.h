@@ -13,8 +13,10 @@ namespace AppModels {
             std::string email;
             std::string name;
             std::string token; // GitHub Personal Access Token
+            
 
         public:
+            std::vector<AppModels::Repo> repos;
             // Setters
             void setUsername(const std::string& uname) { username = uname; }
             void setEmail(const std::string& mail) { email = mail; }
@@ -29,13 +31,14 @@ namespace AppModels {
 
             // ops
             static bool login(AppModels::User& user, const std::string& token);
-            static bool fetchUserRepos(AppModels::User& user, std::vector<AppModels::Repo> &repos);
+            bool fetchUserRepos();
             void clearValues(){
                 setUsername("");
                 setEmail("");
                 setName("");
                 setToken("");
             }
+            std::vector<AppModels::Repo> loadRepos();
     };
 
 }

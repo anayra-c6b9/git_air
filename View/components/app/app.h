@@ -7,6 +7,7 @@
 #include "../../Pages/home/home.h"
 #include "../../Pages/browse/browse.h"
 #include "../../Pages/clone_repo/clone_repo.h"
+#include "../../Pages/user_repos/user_repos.h"
 #include <map>
 #include <string>
 
@@ -26,6 +27,7 @@ namespace AppComponent {
             pages["home"] = new AppPages::HomePage();
             pages["browse"] = new AppPages::BrowsePage();
             pages["clone_repo"] = new AppPages::CloneRepoPage();
+            pages["user_repos"] = new AppPages::UserReposPage();
 
             current_page = pages["loading_screen"];
             current_page_name = "loading_screen";

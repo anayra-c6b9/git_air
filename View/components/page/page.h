@@ -11,6 +11,7 @@ namespace AppComponent {
             bool hasFooter;
             virtual void display() = 0;
             virtual  void handleInput(int ch, AppComponent::App *app) = 0;
+            virtual void clearValues() = 0;
             virtual ~Page() = default;
     };
 }

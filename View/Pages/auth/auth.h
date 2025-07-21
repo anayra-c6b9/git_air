@@ -57,6 +57,7 @@ namespace AppPages{
 			void display() override;
             void handleInput(int ch, AppComponent::App *app) override ;
 			bool login();
+			void clearValues() override;
 
 			~AuthPage(){
 				is_active = false;

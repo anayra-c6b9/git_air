@@ -4,7 +4,8 @@
     "iosfwd": "cpp",
     "thread": "cpp",
     "new": "cpp",
-    "string": "cpp"
+    "string": "cpp",
+    "vector": "cpp"
   },
   "C_Cpp.errorSquiggles": "enabled"
 }
