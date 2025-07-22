@@ -5,6 +5,7 @@ CXX      := g++
 INC_DIRS := -Iexternal -IController -IModel \
     -I/opt/homebrew/opt/cpr/include \
     -I/opt/homebrew/opt/nlohmann-json/include \
+	-I/opt/homebrew/include \
 	-IView/components/app_window \
 	-IView/components/base_component \
 	-IView/components/menu_bar \
@@ -20,9 +21,11 @@ CXXFLAGS := -std=c++17 -mmacosx-version-min=15.0 -Wall -Wextra $(INC_DIRS)
 
 # Linker flags (add -lssl -lcrypto if your cpr/curl build is OpenSSL‑based)
 LIBS     := -L/opt/homebrew/opt/cpr/lib -L/opt/homebrew/opt/curl/lib \
+			-L/opt/homebrew/lib \
             -Wl,-rpath,/opt/homebrew/opt/cpr/lib \
             -Wl,-rpath,/opt/homebrew/opt/curl/lib \
-            -lcpr -lcurl -lncurses
+			-Wl,-rpath,/opt/homebrew/lib \
+            -lcpr -lcurl -lncurses -lgit2
 LDFLAGS  := $(LIBS)
 
 # ──────────────────────────────────────────────────────────────────────────────

@@ -9,6 +9,8 @@
 AppComponent::AppWindow app_win;
 AppComponent::MenuBar menu_bar;
 AppComponent::App app;
+std::string curr_local_path;
+std::string the_user_token;
 
 void handleSignals(int sig) {
 		switch(sig) {

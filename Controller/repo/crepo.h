@@ -3,6 +3,7 @@
 
 
 #include "../../Model/repo/mrepo.h"
+#include "../../Model/local_repo/mlocal_repo.h"
 
 #include <string>
 
@@ -13,6 +14,9 @@ namespace AppControllers {
     class Repo {
         public:
             static std::vector<AppModels::Repo> fetchUserRepos();
+            static bool isGitRepo(const std::string path);
+            static AppModels::LocalRepo * getRepoInfo(const std::string path);
+            static bool pushRepo(std::string token);
     };
 }
 

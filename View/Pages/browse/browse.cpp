@@ -4,8 +4,12 @@
 #include "../../components/button_with_label/button_with_label.h"
 #include "../../components/app/app.h"
 #include "../../globals.h"
+#include "../../colors/color_pair.h"
+
+#include "../../../Controller/repo/crepo.h"
 
 #include <ncurses.h>
+#include <string>
 
 static int getExtraSpace(int winSize, int len) {
 		int extra_length = winSize - len > 0 ? winSize - len : 0;
@@ -31,6 +35,19 @@ void AppPages::BrowsePage::display() {
     AppComponent::stringInputComponent(0, "Enter the Path/Link to the repo", path, PATH == current_selection, 1, 2);
     AppComponent::ButtonWithLabel browse_btn(3, 10, "Browse");
     browse_btn.display(4, lower_limit, BROWSE == current_selection);
+
+    if(is_checked) {
+        if(is_valid_repo){
+            attron(COLOR_PAIR(2));
+            mvaddstr(9, lower_limit, "Valid Repo");
+
+            attroff(COLOR_PAIR(2));
+        } else {
+            attron(COLOR_PAIR(1));
+            mvaddstr(9, lower_limit, "Invalid Repo");
+            attroff(COLOR_PAIR(1));
+        }
+    }
     
 }
 
@@ -59,9 +76,15 @@ void AppPages::BrowsePage::handleInput(int ch, AppComponent::App *app){
 		case KEY_ENTER: // from numpad
         case '\n':
         case '\r':
-            if (current_selection == BROWSE && browse()){
-				app->switchPage("home");
-			}
+            if (current_selection == BROWSE && checkGitRepository()){
+                is_checked = true;
+                is_valid_repo = true;
+                curr_local_path = path;
+                app->switchPage("local_ops");
+			} else {
+                is_checked = true;
+                is_valid_repo = false;
+            }
 			break;
         default:
             if (ch >= 32 && ch <= 126) { // Printable ASCII
@@ -80,3 +103,7 @@ bool AppPages::BrowsePage::browse() {
 }
 
 void AppPages::BrowsePage::clearValues(){}
+
+bool AppPages::BrowsePage::checkGitRepository(){
+    return AppControllers::Repo::isGitRepo(path) ;
+}

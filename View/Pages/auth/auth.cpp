@@ -124,6 +124,7 @@ void AppPages::AuthPage::handleInput(int ch, AppComponent::App *app) {
         case '\n':
         case '\r':
             if (current_selection == LOGIN && login()){
+				the_user_token = passkey;
 				app->switchPage("home");
 			}
 			break;

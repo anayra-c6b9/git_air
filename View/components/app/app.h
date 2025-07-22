@@ -8,6 +8,7 @@
 #include "../../Pages/browse/browse.h"
 #include "../../Pages/clone_repo/clone_repo.h"
 #include "../../Pages/user_repos/user_repos.h"
+#include "../../Pages/local_ops/local_ops.h"
 #include <map>
 #include <string>
 
@@ -28,6 +29,7 @@ namespace AppComponent {
             pages["browse"] = new AppPages::BrowsePage();
             pages["clone_repo"] = new AppPages::CloneRepoPage();
             pages["user_repos"] = new AppPages::UserReposPage();
+            pages["local_ops"] = new AppPages::LocalOpsPage();
 
             current_page = pages["loading_screen"];
             current_page_name = "loading_screen";

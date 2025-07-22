@@ -13,6 +13,8 @@ namespace AppPages{
 		private:
             uint current_selection;
             std::string path;
+			bool is_valid_repo;
+			bool is_checked;
 			enum Field {
                 PATH = 0,
                 BROWSE = 1,
@@ -23,12 +25,15 @@ namespace AppPages{
 				current_selection = 0;
 				hasFooter = true;
                 path = "";
+				is_valid_repo = false;
+				is_checked = false;
 			}
 
 			void display() override;
             void handleInput(int ch, AppComponent::App *app) override ;
             bool browse();
 			void clearValues() override;
+			bool checkGitRepository();
 			~BrowsePage(){
 			}
 	};
